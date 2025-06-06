@@ -51,7 +51,27 @@ map.on("click", function(e){
     sidebar.appendChild(location);
     location.style.color = "white"
     //when a marker is clicked it will be removed from local storage and the map
-    marker_add_listener(marker);
+    marker.on('click', (evt) => {
+        evt.target.remove();
+        let coordinates_rem = [evt.latlng.lat, evt.latlng.lng];
+        
+        let all_coords = localStorage.getItem('savedMarkers');
+        all_coords = JSON.parse(all_coords);
+
+        console.log(all_coords);
+        
+        let index_to_remove = all_coords.findIndex((coord) => {
+            return Math.round(coord[0] * 100) === Math.round(coordinates_rem[0] * 100) && Math.round(coord[1] * 100) === Math.round(coordinates_rem[1] * 100);
+        });
+        
+        console.log(index_to_remove);
+
+        if (index_to_remove > -1) { // only splice array when item is found
+            all_coords.splice(index_to_remove, 1); // 2nd parameter means remove one item only
+        }
+
+        localStorage.setItem('savedMarkers', JSON.stringify(all_coords));
+    });
 
     markers.push(coordinates);
     console.log(markers);
