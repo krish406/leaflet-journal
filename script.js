@@ -8,6 +8,14 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 new L.Control.Geocoder().addTo(map);
 
 let markers = [];
+let savedMarkers = localStorage.getItem('savedMarkers');
+if (savedMarkers) {
+    var coordinates = JSON.parse(savedMarkers);
+    coordinates.forEach(function(coord) {
+        L.marker(coord).addTo(map);
+        markers.push(coord);
+    });
+}
 
 //add and delete markers on click
 map.on("click", function(e){
