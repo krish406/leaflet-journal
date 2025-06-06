@@ -21,9 +21,18 @@ body {
   width: 20vw;
   height: 100vh;
   background-color: rgb(71, 92, 134);
+  padding:20px;
+  color:white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #map {
   width: 80vw;
   height: 100vh;
+}
+
+p.coord{
+  margin-bottom: 10px;
+  background-color: rgb(54, 113, 169);
+  padding:10px;
 }

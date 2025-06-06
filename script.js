@@ -1,10 +1,12 @@
-var map = L.map('map').setView([51.505, -0.09], 13);
+const map = L.map('map').setView([51.505, -0.09], 4);
+const sidebar = document.querySelector(".sidebar");
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
+//add geocoder
 new L.Control.Geocoder().addTo(map);
 
 function marker_add_listener(element){
@@ -19,30 +21,35 @@ function marker_add_listener(element){
             return Math.round(coord[0] * 100) === Math.round(coordinates_rem[0] * 100) && Math.round(coord[1] * 100) === Math.round(coordinates_rem[1] * 100);
         });
         
-        if (index_to_remove > -1) { // only splice array when item is found
-            all_coords.splice(index_to_remove, 1); // 2nd parameter means remove one item only
+        if (index_to_remove > -1) { 
+            all_coords.splice(index_to_remove, 1); 
         }
 
         localStorage.setItem('savedMarkers', JSON.stringify(all_coords));
     });
 }
 
+//store and rerender markers
 let markers = [];
 let savedMarkers = localStorage.getItem('savedMarkers');
 if (savedMarkers) {
-    var coordinates = JSON.parse(savedMarkers);
+    let coordinates = JSON.parse(savedMarkers);
     coordinates.forEach(function(coord) {
-        var marker = L.marker(coord).addTo(map);
+        let marker = L.marker(coord).addTo(map);
         markers.push(coord);
         marker_add_listener(marker);
     });
 }
 
-//add and delete markers on click
+//add and delete markers on map click
 map.on("click", function(e){
     let coordinates = [e.latlng.lat, e.latlng.lng];
-    var marker = new L.marker(coordinates).addTo(map)
-
+    let marker = new L.marker(coordinates).addTo(map)
+    let location = document.createElement("p");
+    location.className = "coord";
+    location.textContent = `${coordinates[0]}, ${coordinates[1]}`;
+    sidebar.appendChild(location);
+    location.style.color = "white"
     //when a marker is clicked it will be removed from local storage and the map
     marker_add_listener(marker);
 
@@ -51,5 +58,5 @@ map.on("click", function(e){
 
     localStorage.setItem('savedMarkers', JSON.stringify(markers));
     console.log(localStorage);
-})
+});
 
