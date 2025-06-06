@@ -7,8 +7,16 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 new L.Control.Geocoder().addTo(map);
 
+let markers = [];
+
+//add and delete markers on click
 map.on("click", function(e){
-    var marker = new L.marker([e.latlng.lat, e.latlng.lng]).addTo(map).on('click', e => e.target.remove());
-    marker.className = "hello";
-    console.log(marker);
+    let coordinates = [e.latlng.lat, e.latlng.lng];
+    var marker = new L.marker(coordinates).addTo(map).on('click', e => e.target.remove());
+    markers.push(coordinates);
+    console.log(markers);
+
+    localStorage.setItem('savedMarkers', JSON.stringify(markers));
+    console.log(localStorage);
 })
+
