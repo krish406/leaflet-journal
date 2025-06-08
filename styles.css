@@ -18,10 +18,14 @@ body {
 }
 
 .sidebar {
+  display: flex;
+  flex-grow: 0;
+  flex-direction: column;
+  gap: 10px;
   width: 20vw;
   height: 100vh;
   background-color: rgb(71, 92, 134);
-  padding:20px;
+  padding:10px;
   color:white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -35,4 +39,10 @@ p.coord{
   margin-bottom: 10px;
   background-color: rgb(54, 113, 169);
   padding:10px;
+}
+
+.location-element{
+  background-color: rgb(113, 144, 207);
+  margin: 0px;
+  padding: 10px;
 }
